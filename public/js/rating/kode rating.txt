@@ -1,0 +1,122 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Rating</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<center>
+					<form action="/rating" method="POST" enctype="multipart/form-data">
+					@csrf
+					<div id="rateYo" data-rateyo-rating="0"></div>
+					<input type="hidden" value="1" name="rateyoid" id="rateyoid">
+					<input type="hidden" value="{{ $thread_pilihan->id}} " name="thread_id_for_rating">
+					<input type="hidden" value="{{ Auth::user()->id}} " name="user_id_rating">
+				</center>
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+					</form>
+				</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="{{ asset('js/rating/jquery.min.js')}} "></script>
+<script type="text/javascript" src="{{ asset('js/rating/jquery.rateyo.js')}} "></script>
+<script type="text/javascript" src="{{ asset('js/rating/application.js')}} "></script>
+
+
+<script type="text/javascript">
+	
+	$(function () {
+		$("#rateYo").rateYo()
+		.on("rateyo.set", function (e, data) {
+			document.getElementById("rateyoid").value=data.rating;
+		});
+	});
+
+	$(function () {
+		$("#rateYo2").rateYo({
+		readOnly: true
+	});
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$rat = DB::table('tb_rating')
+        ->where('thread_id_for_rating',$request->input('thread_id_for_rating'))
+        ->where('user_id_rating',$request->input('user_id_rating'))
+        ->count();
+		
+        if($rat > 0){
+			return back()->with('error','Anda Sudah Melakukan Rating ! ');
+        }else{
+			Rating_m::insert([
+            'jumlah_rating' =>$request->input('rateyoid'),
+            'thread_id_for_rating' =>$request->input('thread_id_for_rating'),
+            'user_id_rating' =>$request->input('user_id_rating')
+            ]);
+
+            return back()->withInput()->with('success', 'Anda Berhasil Melakukan Rating !');
+        }
+
+
+
+
+
+protected $table = "tb_rating";
+    protected $fillable = ['user_id_rating','thread_id_for_rating','jumlah_rating'];
+    public $timestamps = false;
+
+
+
+
+
+
+
+
+
+
+
+
+$data_rating = DB::table('tb_rating')
+        ->select('tb_rating.user_id_komentar')
+        ->where('tb_rating.thread_id_for_rating',$id)->sum('jumlah_rating');
+
+        $data_rating_qty = DB::table('tb_rating')
+        ->select('tb_rating.user_id_komentar')
+        ->where('tb_rating.thread_id_for_rating',$id)->count('user_id_rating');
+
+        if ($data_rating_qty != 0){
+            $hasil_rating = ($data_rating/$data_rating_qty);
+        }else{
+            $hasil_rating = ($data_rating/1);
+        }
+
+        $jumlah_komentar = DB::table('tb_komentar')->where('tb_komentar.thread_id',$id)->count();

@@ -1,0 +1,288 @@
+::-moz-selection {
+    background: #e74c3c;
+    color: #fff;
+    text-shadow: none;
+}
+
+::selection {
+    background: #e74c3c;
+    color: #fff;
+    text-shadow: none;
+}
+
+a {
+    color: #e74c3c;
+}
+
+a:hover {
+    color: #e74c3c;
+}
+
+footer .nav-list li a:hover,
+footer ul.regular li a:hover {
+    color: #e74c3c;
+}
+
+.btn-link:hover {
+    color: #e74c3c;
+}
+
+.btn-color {
+    background: #e74c3c;
+    border: 1px solid #e74c3c;
+    *background: #e74c3c;
+}
+
+.btn-color:hover,
+.btn-color.active,
+.btn-color.disabled,
+.btn-color[disabled] {
+    background: #e74c3c;
+    *background: #e74c3c;
+}
+
+
+/* sequence slider */
+
+.info h2 {
+    background: #e74c3c;
+}
+
+
+/* fontawesome icons */
+
+.icon-square:hover,
+.icon-rounded:hover,
+.icon-circled:hover {
+    background-color: #e74c3c;
+}
+
+[class^="icon-"].active,
+[class*=" icon-"].active {
+    background-color: #e74c3c;
+}
+
+
+/* header */
+
+.navbar .nav li.active {
+    border-top: 5px solid #e74c3c;
+}
+
+.navbar .nav li.active a {
+    color: #e74c3c;
+}
+
+.navbar .nav li ul.dropdown-menu li a:hover,
+.navbar .nav li.active ul.dropdown-menu li a:hover {
+    background: #e74c3c;
+}
+
+.color {
+    background: #e74c3c;
+    color: #fff;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    border-color: #e74c3c;
+    outline: 0;
+    outline: thin dotted \9;
+    /* IE6-9 */
+}
+
+
+/* sequence slider */
+
+.sequence-nav .next:hover,
+.sequence-nav .prev:hover {
+    background: #e74c3c;
+}
+
+
+/* breadcrumb */
+
+.breadcrumb {}
+
+
+/* accordion */
+
+.accordion-heading a:hover {
+    color: #e74c3c;
+}
+
+.accordion-heading .active {
+    color: #e74c3c;
+}
+
+
+/* pricing box */
+
+.priceBox.special .emphasis {
+    background: #e74c3c;
+}
+
+
+/* tagline */
+
+.tagline {
+    border-bottom: 5px solid #e74c3c;
+}
+
+
+/* button */
+
+.btn-link {
+    color: #e74c3c;
+}
+
+.nav .dropdown-toggle .caret {
+    margin-top: 6px;
+    border-top-color: #e74c3c;
+    border-bottom-color: #e74c3c;
+}
+
+
+/* tabs */
+
+.nav-pills>.active>a,
+.nav-pills>.active>a:hover {
+    color: #ffffff;
+    background-color: #e74c3c;
+}
+
+
+/* accordion */
+
+.accordion-heading a.accordion-toggle:hover {
+    color: #e74c3c;
+}
+
+
+/* label */
+
+.label-orange,
+.badge-orange {
+    background-color: #e74c3c;
+}
+
+
+/* nav */
+
+.nav-list>.active>a,
+.nav-list>.active>a:hover {
+    background: #e74c3c;
+}
+
+.nav-pills>.active>a,
+.nav-pills>.active>a:hover {
+    background: #e74c3c;
+}
+
+.nav .dropdown-toggle .caret {
+    border-top-color: #e74c3c;
+    border-bottom-color: #e74c3c;
+}
+
+
+/* custom progress bar according template skin */
+
+.progress-orange .bar,
+.progress .bar-orange {
+    background: #e74c3c;
+}
+
+.progress-orange.progress-striped .bar,
+.progress-striped .bar-orange {
+    background: #e74c3c;
+}
+
+
+/* pagination */
+
+.pagination ul li a:hover {
+    background: #e74c3c;
+    border-color: #e74c3c;
+}
+
+
+/* widget */
+
+aside .widget ul.cat li a:hover {
+    color: #e74c3c;
+}
+
+aside .widget ul.recent-posts li a:hover {
+    color: #e74c3c;
+}
+
+
+/* article */
+
+.entry-body a h5.title:hover {
+    color: #e74c3c;
+}
+
+article.blog-post .post-heading h3 a:hover {
+    color: #e74c3c;
+}
+
+article.last-post {
+    background: #e74c3c;
+}
+
+ul.time-post li.year {
+    border-bottom: 1px solid #e74c3c;
+}
+
+section#subintro {
+    background: #e74c3c;
+}
+
+
+/* 404 */
+
+.error-body {
+    background: #e74c3c;
+    padding: 20px;
+    text-align: center;
+}
+
+
+/* misc */
+
+a.thumbnail:hover {
+    border-color: #e74c3c;
+}
+
+ul.filter li.active a:hover,
+.flex-control-nav li a:hover,
+.flex-control-nav li a.active {
+    background: #e74c3c;
+}
+
+.thumbnail h4 a:hover,
+.thumbnail .meta span a:hover,
+ul.recent li h6 a:hover,
+ul.post-meta li a:hover,
+.media-body span,
+.media-body .media-heading a:hover,
+form label span,
+article.last-post h5 a:hover {
+    color: #e74c3c;
+    text-decoration: none;
+}
