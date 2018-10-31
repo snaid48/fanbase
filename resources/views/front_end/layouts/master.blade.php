@@ -27,7 +27,9 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('assets/ico/apple-touch-icon-72-precomposed.png') }}">
   <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/ico/apple-touch-icon-57-precomposed.png') }}">
 
-  
+  <link href="{{asset('sweetalert/app.css')}} " rel="stylesheet" />
+
+
 
   <!-- =======================================================
     Theme Name: Serenity
@@ -52,7 +54,7 @@
             <nav>
               <ul class="nav topnav">
                 <li class="dropdown {{(Route::getFacadeRoot()->current()->uri() === 'home') ? 'active' : null}}">
-                  <a href="index.html">Home</a>
+                  <a href="{{ route('home.index') }}">Home</a>
                 </li>
                 <li class="{{(Route::getFacadeRoot()->current()->uri() === 'news') ? 'active' : null}}">
                   <a href="{{ route('news.index') }}">News</a>
@@ -67,9 +69,31 @@
 
                 </li>
                 <li class="{{(Route::getFacadeRoot()->current()->uri() === 'historical') ? 'active' : null}}">
-                    <a href="{{ route('historical.index') }}">Historical</a>
-  
-                  </li>
+                  <a href="{{ route('historical.index') }}">Historical</a>
+
+                </li>
+
+                @guest
+                            <li >
+                                <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @else
+                        <li><a href="{{ route('logout') }}"
+                          onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                           {{ __('Logout') }}
+                       </a>
+
+                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                           @csrf
+                       </form>
+                      </li>
+                      @endguest
+
+               
                 {{--
                 <li>
                   <a href="contact.html">Contact</a>
@@ -88,6 +112,7 @@
   <footer class="footer">
     <div class="container">
       <div class="row">
+        {{--
         <div class="span4">
           <div class="widget">
             <h5>Browse pages</h5>
@@ -99,7 +124,7 @@
               <li><a href="#">Meet the team</a></li>
             </ul>
           </div>
-        </div>
+        </div> --}} {{--
         <div class="span4">
           <div class="widget">
             <h5>Recent blog posts</h5>
@@ -110,7 +135,7 @@
               <li><a href="#">Te malorum dignissim eos quod sensibus</a></li>
             </ul>
           </div>
-        </div>
+        </div> --}} {{--
         <div class="span4">
           <div class="widget">
             <!-- logo -->
@@ -125,7 +150,7 @@
 							<abbr title="Phone">P:</abbr> (123) 456-7890
 						</address>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
     <div class="verybottom" style="color: white">
@@ -133,7 +158,7 @@
         <div class="row">
           <div class="span6">
             <p>
-              &copy; Timnasku - All right reserved
+              <img src="{{ asset('assets/img/logo-dark.png') }}" alt=""> &copy; Timnasku - All right reserved
             </p>
           </div>
           <div class="span6">
@@ -144,8 +169,7 @@
                 Licensing information: https://bootstrapmade.com/license/
                 Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Serenity
               -->
-              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> 
-              {{-- Devekop by <a href="#">Dian Sulistyadi</a> --}}
+              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> {{-- Devekop by <a href="#">Dian Sulistyadi</a>              --}}
             </div>
           </div>
         </div>
@@ -170,6 +194,10 @@
 
   <!-- Template Custom JavaScript File -->
   <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+
+  <script src="{{asset('sweetalert/index.js')}} "></script>
+  <script src="{{asset('sweetalert/sweetalert.min.js')}} "></script>
 
 </body>
 

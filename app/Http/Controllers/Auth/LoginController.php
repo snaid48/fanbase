@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -34,6 +37,33 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        // $this->redirectTo = URL::current();
+        // $this->redirectTo = url()->previous();
         $this->middleware('guest')->except('logout');
+        Session::put('backUrl', URL::previous());
+        // return redirect()->intended(Session::pull('referrer'));
+        // return redirect()->intended('defaultpage');
+    }
+
+    public function redirectTo()
+    {
+
+        // User role
+    $role = Auth::user()->role; 
+    
+    // Check user role
+    switch ($role) {
+        case 'admin':
+                return '/admin/news';
+            break;
+        case 'member':
+        return Session::get('backUrl') ? Session::get('backUrl') :   $this->redirectTo;
+            break; 
+        default:
+                return '/login'; 
+            break;
+    }
+
+        
     }
 }

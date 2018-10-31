@@ -19,6 +19,7 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->string('category');
             $table->date('event_date');
+            $table->string('photo');
             $table->integer('posting');
             $table->timestamps();
             $table->softDeletes();

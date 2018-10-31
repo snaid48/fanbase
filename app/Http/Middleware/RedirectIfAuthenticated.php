@@ -19,6 +19,8 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect('/home');
+            // return redirect()->back()->withInput();
+            // return redirect()->guest('login');
         }
 
         return $next($request);

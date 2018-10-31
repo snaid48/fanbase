@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('player_name');
             $table->string('position');
+            $table->string('photo');
             $table->integer('province_id');
             $table->timestamps();
             $table->softDeletes();

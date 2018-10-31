@@ -18,6 +18,7 @@ class CreateNewsTable extends Migration
             $table->string('news_title');
             $table->text('news_field');
             $table->string('category');
+            $table->string('photo');
             $table->integer('author');
             $table->timestamps();
             $table->softDeletes();

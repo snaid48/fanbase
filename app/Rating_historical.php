@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Rating_historical extends Model
 {
-    protected $table = "rating_events";
+    // protected $table = "rating_events";
     // protected $fillable = ['event_id','posting','comment'];
     protected $guarded = [];
 
@@ -21,6 +21,6 @@ class Rating_historical extends Model
 
     
     public function rating(){
-        return $this->belongsTo('App\News','historical_id');
+        return $this->belongsTo('App\Historical','historical_id');
     }
 }

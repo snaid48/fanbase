@@ -17,6 +17,7 @@ class CreateHistoricalsTable extends Migration
             $table->increments('id');
             $table->string('historical_title');
             $table->text('historical_field');
+            $table->string('photo');
             $table->integer('author');
             $table->timestamps();
             $table->softDeletes();

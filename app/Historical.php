@@ -17,7 +17,7 @@ class Historical extends Model
     }
 
     public function comment_historical(){
-        return $this->hasMany('App\Comment_historical','historical_id');
+        return $this->hasMany('App\Comment_historical','historical_id')->orderBy('created_at', 'desc');
     }
 
     public function rating(){

@@ -8,6 +8,7 @@
 <!-- Subhead
 ================================================== -->
 <section id="subintro">
+  {{--
   <div class="jumbotron subhead" id="overview">
     <div class="container">
       <div class="row">
@@ -21,7 +22,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 </section>
 <section id="breadcrumb">
   <div class="container">
@@ -38,18 +39,19 @@
 <section id="maincontent">
   <div class="container">
     <div class="row">
-      <div class="span8">
+      <div class="span12" style="text-align: center">
         <!-- start article full post -->
         <article class="blog-post">
           <div class="post-heading">
-            <h3><a href="#">{{ $event->event_name}}</a></h3>
+            <h1><a href="#">{{ $event->event_name}}</a></h1>
           </div>
           <div class="clearfix">
           </div>
-          <img src="{{ asset('assets/img/dummies/blog1.jpg') }}" alt="" />
+          <img src="{{asset('/storage/event/'.$event->photo)}}" alt="" width="770px" height="400px" />
           <ul class="post-meta">
             <li class="first"><i class="icon-calendar"></i><span>{{date_format($event->created_at,"Y-m-d")}}</span></li>
             <li><i class="icon-list-alt"></i><span><a href="#">{{ count($event->comment_event)}}  comments</a></span></li>
+            <li><i class="icon-list-alt"></i><span><a href="#">Rating : {{ round($rating,2)}} / 5</a></span></li>
 
             <div style="padding-top: 0px;" id="rateYo" data-rateyo-rating="0"></div>
 
@@ -60,24 +62,65 @@
           </ul>
           <div class="clearfix">
           </div>
-          <p>
+          <p style="text-align: justify">
             {{ $event->description}}
           </p>
+
+          @if (Route::has('login')) @auth
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{$event->id}}" aria-expanded="false"
             aria-controls="collapseExample">
                               Comment
                             </button>
 
+                            <a href="#myModal" role="button" class="btn btn-info" data-toggle="modal">Give Rating</a> 
+                            <!-- Modal --> 
+                            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+                                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                    <h3 id="myModalLabel">Rating</h3> 
+                                </div> 
+            
+                                <div class="modal-body">
+                                        <center>
+                                            <form action="/rating_event/store" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div id="rateYo" data-rateyo-rating="0"></div>
+                                            {{-- <input type="hidden" value="1" name="rateyoid" id="rateyoid"> --}}
+                                            <input type="hidden" value="{{ $event->id}} " name="event_id">
+                                            <input type="hidden" value="{{ Auth::user()->id}} " name="posting">
+                                            <div class="form-group">
+                                                    
+                                                    <select name="rating" class="form-control" id="exampleFormControlSelect1">
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                      <option value="3">3</option>
+                                                      <option value="4">4</option>
+                                                      <option value="5">5</option>
+                                                    </select>
+                                                  </div>
+                                        </center>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">submit</button>
+                                           
+                                        </div>
+                                    </form>
+            
+                            </div>
+
 
           <div class="collapse" id="collapseExample{{$event->id}}">
             <div class="card card-body">
+
+
+
               <form role="form" action="/event/comment" method="POST">
                 @csrf
                 <div class="form-group">
                   <label>Comment Content</label>
-                  <input type="hidden" name="event_id" value="{{ $event->id}}"> 
-                  <input type="hidden" name="posting" value="{{ Auth::user()->id}} ">
-                  {{-- <input type="hidden" name="posting" value="1"> --}}
+                  <input type="hidden" name="event_id" value="{{ $event->id}}">
+                  <input type="hidden" name="posting" value="{{ Auth::user()->id}} "> {{-- <input type="hidden" name="posting"
+                    value="1"> --}}
                   <textarea rows="9" class="input-block-level{{ $errors->has('comment') ? ' is-invalid' : '' }}" placeholder="Your comment"
                     name="comment" required autofocus></textarea> @if ($errors->has('comment'))
                   <script>
@@ -87,20 +130,72 @@
                 </div>
                 <button type="submit" class="btn btn-primary"> Send</button>
               </form>
+
+
+            </div>
+          </div>
+          @else
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{$event->id}}" aria-expanded="false"
+            aria-controls="collapseExample">
+                                Login to Comment
+                              </button>
+          <div class="collapse" id="collapseExample{{$event->id}}">
+            <div class="card card-body">
+
+
+              <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="form-group row">
+                  <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                  <div class="col-md-6">
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"
+                      required autofocus> @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('email') }}</strong>
+                                  </span> @endif
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                  <div class="col-md-6">
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+                      required> @if ($errors->has('password'))
+                    <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('password') }}</strong>
+                                  </span> @endif
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-6 offset-md-4">
+                    <div class="form-check">
+                      <button type="submit" class="btn btn-primary">
+                                      {{ __('Login') }}
+                                  </button>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+
             </div>
           </div>
 
-          @if (session('status'))
+          @endauth @endif @if (session('status'))
           <div class="alert alert-success">
             {{ session('status') }}
           </div>
-          
+
           @endif
 
         </article>
         <!-- end article full post -->
         <h4>Comments</h4>
-        <ul class="media-list">
+        <ul class="media-list" style="text-align: left">
           @isset($event) @forelse($event->comment_event as $row)
           <li class="media">
             <a class="pull-left" href="#">
@@ -126,6 +221,7 @@
         </ul>
 
       </div>
+      {{--
       <div class="span4">
         <aside>
           <div class="widget">
@@ -184,7 +280,7 @@
             </ul>
           </div>
         </aside>
-      </div>
+      </div> --}}
     </div>
   </div>
 

@@ -16,7 +16,7 @@ class Comment_historical extends Model
 
 
     public function user(){
-        return $this->belongsTo('App\User','posting');
+        return $this->belongsTo('App\User','author');
     }
 
     

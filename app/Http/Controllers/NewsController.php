@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\News;
 use App\Comment_news;
 use Carbon\Carbon;
+use App\Rating_news;
 
 class NewsController extends Controller
 {
@@ -16,9 +17,16 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();
+        $news = News::orderBy('created_at', 'desc')->get();
         // dd($news->comment_news);
         return view('front_end.news.display', compact('news'));
+    }
+
+    public function adminIndex()
+    {
+        $news = News::all();
+        // dd($news->comment_news);
+        return view('back_end.news.home', compact('news'));
     }
 
     /**
@@ -28,8 +36,10 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('back_end.news.add');
     }
+
+    
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +49,29 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->photo);
+        $filename = time().'.png';
+        $request->file('photo')->storeAs('public/news',$filename);
+        
+        News::create([
+            'news_title' => $request->news_title,
+            'author' => $request->author,
+            'news_field' => $request->news_field,
+            'category' => $request->category,
+            'photo' => $filename
+        ]);
+        return redirect('/admin/news');
+    }
+
+    public function ratingStore(Request $request)
+    {
+        // dd($request->photo);
+        Rating_news::create([
+            'news_id' => $request->news_id,
+            'posting' => $request->posting,
+            'rating' => $request->rating
+        ]);
+        return back()->withInput()->with('status', 'Rating Success!');
     }
 
     /**
@@ -51,7 +83,8 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = News::findOrFail($id);
-    	return view('front_end.news.single', compact('news'));
+        $rating = Rating_news::where('news_id', $id)->avg('rating');
+    	return view('front_end.news.single', compact('news','rating'));
     }
 
     /**
@@ -62,7 +95,8 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $news = News::findOrFail($id);
+    	return view('back_end.news.edit', compact('news'));
     }
 
     /**
@@ -72,9 +106,24 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $filename = time().'.png';
+        if ($request->hasFile('photo')) {
+            $request->file('photo')->storeAs('public/news',$filename);
+        }
+        
+        //dd('berhasil');
+        News::where('id', $request->id)
+        ->update([
+            'news_title' => $request->news_title,
+            'author' => $request->author,
+            'news_field' => $request->news_field,
+            'category' => $request->category,
+            'photo' => $filename
+        ]);
+        return redirect('/admin/news');
+
     }
 
     /**
@@ -85,10 +134,11 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = News::where('id','=',$id);
+        $data->delete();
     }
 
-    public function save_comment(Request $request)
+    public function saveComment(Request $request)
     {
         $validatedData = $request->validate([
         'comment' => 'required'
@@ -101,7 +151,7 @@ class NewsController extends Controller
          'created_at' => $current_time
         ]);
 
-        return back()->withInput();
+        return back()->withInput()->with('status', 'Comment Success!');
     }
 
 

@@ -8,7 +8,7 @@
 <!-- Subhead
 ================================================== -->
 <section id="subintro">
-    <div class="jumbotron subhead" id="overview">
+    {{-- <div class="jumbotron subhead" id="overview">
         <div class="container">
             <div class="row">
                 <div class="span12">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </section>
 <section id="breadcrumb">
     <div class="container">
@@ -29,14 +29,16 @@
             <div class="span12">
                 <ul class="breadcrumb notop">
                     <li><a href="#">Home</a><span class="divider">/</span></li>
-                    <li class="active">Blog right sidebar</li>
+                    <li class="active">Historical</li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 <section id="maincontent">
-    <div class="container">
+    <div class="container" style="margin: auto;
+    width: 50%;
+    padding: 10px;">
         <div class="row">
             <div class="span8">
 
@@ -44,26 +46,26 @@
                 <!-- start article 1 -->
                 <article class="blog-post">
                     <div class="post-heading">
-                        <h3><a href="#">{{$row->event_name}}</a></h3>
+                        <h3><a href="#">{{$row->historical_title}}</a></h3>
                     </div>
                     <div class="row">
                         <div class="span3">
                             <div class="post-image">
-                                <a href="#"><img src="assets/img/dummies/blog1.jpg" alt="" /></a>
+                                <a href="#"><img src="{{asset('/storage/historical/'.$row->photo)}}" alt="" /></a>
                             </div>
                         </div>
                         <div class="span5">
                             <ul class="post-meta">
                                 <li class="first"><i class="icon-calendar"></i><span>{{date_format($row->created_at,"Y/m/d")}}</span></li>
-                                @isset($row->comment_event)
-                                <li><i class="icon-list-alt"></i><span><a href="#">{{ count($row->comment_event)}} comments</a></span></li>
+                                @isset($row->comment_historical)
+                                <li><i class="icon-list-alt"></i><span><a href="#">{{ count($row->comment_historical)}} comments</a></span></li>
                                 @endisset
                                 {{-- <li class="last"><i class="icon-tags"></i><span><a href="#">Design</a>, <a href="#">Blog</a>, <a href="#">Tutorial</a></span></li> --}}
                             </ul>
                             <div class="clearfix">
                             </div>
                             <p>
-                                {{$row->description}}
+                                {{strip_tags(substr(($row->historical_field),0,100))}}...
                             </p>
                             <a href="{{ route('historical.show', $row->id)}}" class="btn btn-small btn-success" >Read more</a>
                         </div>
@@ -73,7 +75,7 @@
 
                 @endforeach
 
-                <div class="pagination">
+                {{-- <div class="pagination">
                     <ul>
                         <li><a href="#">Prev</a></li>
                         <li><a href="#">1</a></li>
@@ -82,9 +84,9 @@
                         <li><a href="#">4</a></li>
                         <li><a href="#">Next</a></li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
-            <div class="span4">
+            {{-- <div class="span4">
                 <aside>
                     <div class="widget">
                         <form class="form-search">
@@ -142,7 +144,7 @@
                         </ul>
                     </div>
                 </aside>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>

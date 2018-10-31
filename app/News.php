@@ -20,7 +20,7 @@ class News extends Model
     }
 
     public function comment_news(){
-        return $this->hasMany('App\Comment_news','news_id');
+        return $this->hasMany('App\Comment_news','news_id')->orderBy('created_at', 'desc');
     }
 
     public function rating(){
